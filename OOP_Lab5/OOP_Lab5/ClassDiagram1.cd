@@ -16,7 +16,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="OOP_Lab5.Transformer" Collapsed="true">
+  <Class Name="OOP_Lab5.Transformer">
     <Position X="1.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAABAIAAAAAAAAAEAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
@@ -27,7 +27,7 @@
   <Class Name="OOP_Lab5.Vehicle" Collapsed="true">
     <Position X="6" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAIBAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAIAAAAAAAAAAgAAAAAAAAAAAAIIBAAAAAAAAAAA=</HashCode>
       <FileName>Classes.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -56,7 +56,7 @@
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="OOP_Lab5.Engine" Collapsed="true">
+  <Class Name="OOP_Lab5.Engine">
     <Position X="10.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>

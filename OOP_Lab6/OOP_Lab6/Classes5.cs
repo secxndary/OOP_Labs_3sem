@@ -2,31 +2,29 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OOP_Lab5
+namespace OOP_Lab6
 {
-    public interface IName
-    {
-        string Name { get { return Name; } set { this.Name = value; } }
-    }
+
     public abstract class IntelligentBeing : IName
     {
         public string Name { get; set; }
+        public Date Date;
     }
 
     public class Person : IntelligentBeing, IDrive
     {
         public string LastName { get; set; }
 
-        public Person(string name, string lastName)
+        public Person(string name, string lastName, Date date)
         {
             this.Name = name;
             this.LastName = lastName;
+            this.Date = date;
         }
-
 
         public override string ToString()
         {
-            return "Тип объекта: " + GetType().Name + "\nИмя: " + Name + "\nФамилия: " + LastName + "\n" + new String('-', 50);
+            return "Тип объекта: " + GetType().Name + "\nИмя: " + Name + "\nФамилия: " + LastName + "\nДата рождения: " + Date + "\n" + new String('-', 50);
         }
 
         public void Drive(ICarManagement carManagement)
@@ -34,20 +32,23 @@ namespace OOP_Lab5
             carManagement.StartEngine(new Engine());
         }
     }
+
+
     public class Transformer : IntelligentBeing, ICarManagement
     {
         public string Nickname { get; set; }
         public int Power { get; set; }
-        public Transformer(string name, string nickName, int power)
+        public Transformer(string name, string nickName, Date date, int power)
         {
             this.Name = name;
             this.Nickname = nickName;
+            this.Date = date;
             this.Power = power;
         }
 
         public override string ToString()
         {
-            return "Тип объекта: " + GetType().Name + "\nИмя: " + Name + "\nПрозвище: " + Nickname + "\nМощность двигателя: " + Power + "\n" + new String('-', 50);
+            return "Тип объекта: " + GetType().Name + "\nИмя: " + Name + "\nПрозвище: " + Nickname + "\nДата создания: " + Date + "\nМощность двигателя: " + Power + "\n" + new String('-', 50);
         }
         public void StartEngine(Engine engine)
         {
@@ -58,16 +59,6 @@ namespace OOP_Lab5
 
     }
 
-    public interface IDrive
-    {
-        public void Drive(ICarManagement carManagement);
-    }
-
-    public interface ICarManagement
-    {
-        public void StartEngine(Engine engine);
-        public int Power { get; set; }
-    }
 
     public abstract class Vehicle : ICarManagement, IName
     {
@@ -94,38 +85,13 @@ namespace OOP_Lab5
             return 10654;
         }
 
-
     }
 
 
-    public class Printer
-    {
-        public string IAmPrinting(Vehicle obj)
-        {
-            if (obj is Car)
-            {
-                Car c = (Car)obj;
-                return "Тип объекта: " + c.GetType().Name + "\nНазвание машины: " + c.Name + "\nМощность двигателя: " + c.Power + "\nКол-во колёс: " + c.Tires + "\n" + new String('-', 50);
-            }
-            if (obj is Tank)
-            {
-                Tank t = (Tank)obj;
-                return "Тип объекта: " + t.GetType().Name + "\nНазвание танка: " + t.Name + "\nМощность двигателя: " + t.Power + "\nКол-во колёс: " + t.Tires + "\n" + new String('-', 50);
-            }
-            if (obj is Bike)
-            {
-                Bike b = (Bike)obj;
-                return "Тип объекта: " + b.GetType().Name + "\nНазвание байка: " + b.Name + "\nМощность двигателя: " + b.Power + "\nКол-во колёс: " + b.Tires + "\n" + new String('-', 50);
-            }
-            return "qq";
-        }
-    }
-
-
-    public class Car: Vehicle, IName
+    public class Car : Vehicle, IName
     {
         public string Name { get; set; }
-       
+
         public Car(string name, int power)
         {
             this.Tires = 4;
@@ -168,15 +134,40 @@ namespace OOP_Lab5
         }
     }
 
-    public class Bike: Car, IName
+    public class Bike : Car, IName
     {
         public string Company { get; set; }
-        public Bike(string name, int power, string company): base(name, power)
+        public Bike(string name, int power, string company) : base(name, power)
         {
             this.Tires = 2;
             this.Company = company;
         }
     }
+
+
+    public class Printer
+    {
+        public string IAmPrinting(Vehicle obj)
+        {
+            if (obj is Car)
+            {
+                Car c = (Car)obj;
+                return "Тип объекта: " + c.GetType().Name + "\nНазвание машины: " + c.Name + "\nМощность двигателя: " + c.Power + "\nКол-во колёс: " + c.Tires + "\n" + new String('-', 50);
+            }
+            if (obj is Tank)
+            {
+                Tank t = (Tank)obj;
+                return "Тип объекта: " + t.GetType().Name + "\nНазвание танка: " + t.Name + "\nМощность двигателя: " + t.Power + "\nКол-во колёс: " + t.Tires + "\n" + new String('-', 50);
+            }
+            if (obj is Bike)
+            {
+                Bike b = (Bike)obj;
+                return "Тип объекта: " + b.GetType().Name + "\nНазвание байка: " + b.Name + "\nМощность двигателя: " + b.Power + "\nКол-во колёс: " + b.Tires + "\n" + new String('-', 50);
+            }
+            return "Объект не соответствует необходимому типу объекта.";
+        }
+    }
+
 
     public class Engine
     {
