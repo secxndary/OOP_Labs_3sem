@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
-namespace OOP_Lab6
+namespace OOP_Lab7
 {
 
     public abstract class IntelligentBeing : IName
     {
         public string Name { get; set; }
-        public Date Date;
+        public Date Date { get; set; }
     }
 
     public class Person : IntelligentBeing, IDrive
@@ -17,9 +18,16 @@ namespace OOP_Lab6
 
         public Person(string name, string lastName, Date date)
         {
-            this.Name = name;
-            this.LastName = lastName;
+            if (name.Length < 1 || name.Length > 20)
+                throw new NameException("Ошибка! Неккоректно введено имя:", name);
+            else
+                this.Name = name;
+            if (lastName.Length < 1 || lastName.Length > 20)
+                throw new NameException("Ошибка! Неккоректно введена фамилия:", lastName);
+            else
+                this.LastName = lastName;
             this.Date = date;
+            Debug.Assert(date.Year > 1920);
         }
 
         public override string ToString()
@@ -40,10 +48,19 @@ namespace OOP_Lab6
         public int Power { get; set; }
         public Transformer(string name, string nickName, Date date, int power)
         {
-            this.Name = name;
-            this.Nickname = nickName;
+            if (name.Length < 1 || name.Length > 20)
+                throw new NameException("Ошибка! Неккоректно введено имя:", name);
+            else
+                this.Name = name;
+            if (nickName.Length < 1 || nickName.Length > 20)
+                throw new NameException("Ошибка! Неккоректно введено прозвище:", nickName);
+            else
+                this.Nickname = nickName;
             this.Date = date;
-            this.Power = power;
+            if (power < 0 || power > 9999)
+                throw new PowerException("Ошибка! Некорректно введена мощность:", power);
+            else
+                this.Power = power;
         }
 
         public override string ToString()
