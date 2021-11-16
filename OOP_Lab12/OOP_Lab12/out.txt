@@ -1,0 +1,21 @@
+Класс OOP_Lab12.Engine определен в сборке OOP_Lab12, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+
+Конструкторы: Void .ctor()
+
+Методы: 
+--> Boolean		TryPowering()
+--> Type		GetType()
+--> String		ToString()
+--> Boolean		Equals()
+--> Int32		GetHashCode()
+
+Свойства:
+
+Интерфейсы:
+
+Методы с параметром System.Int32:
+
+
+Task 2:
+parameters
+Supra 680
