@@ -87,13 +87,6 @@ namespace OOP_Lab13
             if (File.Exists(ZIPPath))
                 File.Delete(ZIPPath);
 
-            //if (VADUnzip.Exists)
-            //    VADUnzip.Delete();
-
-            //File.Delete(ZIPPath);
-            //FileInfo file1 = new FileInfo(ZIPPath);
-            //if (file1.Exists)
-            //    file1.Delete();
 
             DirectoryInfo musicDirInfo = new DirectoryInfo(musicPath);                       /// путь к Music 
             FileInfo[] filesMusic = musicDirInfo.GetFiles();                                 /// получить все файлы из Music
