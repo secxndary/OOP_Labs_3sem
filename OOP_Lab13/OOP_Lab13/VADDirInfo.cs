@@ -13,13 +13,11 @@ namespace OOP_Lab13
             DirectoryInfo dirInfo = new DirectoryInfo(path);
 
             if (dirInfo.Exists)
-            {
                 DirInfoLog = "\n\n\nVADDirInfo:\n" +
                              "\nКоличество файлов:        " + dirInfo.GetFiles().Length +
                              "\nВремя создания:           " + dirInfo.LastWriteTime +
                              "\nКол-во поддиректориев:    " + dirInfo.GetDirectories().Length +
                              "\nРодительский директорий:  " + dirInfo.Parent.Name;
-            }
 
             VADLog.WriteInLog(DirInfoLog);
         }

@@ -14,14 +14,12 @@ namespace OOP_Lab13
             FileInfo fileInfo = new FileInfo(path);
 
             if (fileInfo.Exists)
-            {
                 fileInfoLog = classLogInfo +
                               "\nПолный путь:      " + path +
                               "\nИмя файла:        " + fileInfo.Name +
                               "\nРазмер файла:     " + fileInfo.Length + " KB" +
                               "\nРасширение:       " + fileInfo.Extension +
                               "\nДата изменения:   " + fileInfo.LastWriteTime;
-            }
 
             VADLog.WriteInLog(fileInfoLog);
         }

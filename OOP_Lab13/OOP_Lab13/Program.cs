@@ -11,6 +11,7 @@ namespace OOP_Lab13
             VADFileInfo.GetFileInfo();
             VADDirInfo.GetDirInfo();
             VADFileManager.VADFiles();
+            VADFileManager.MakeArchive();
             VADFileManager.VADInspect();
             Console.WriteLine("Логи записаны в файл vadlog.txt");
         }

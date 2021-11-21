@@ -22,9 +22,7 @@ namespace OOP_Lab13
         {
             string filePath = @"C:\Users\valda\source\repos\semester #3\OOP_Labs\OOP_Lab13\OOP_Lab13\vadlog.txt";
             using (StreamWriter sw = new StreamWriter(filePath, true, System.Text.Encoding.Default))
-            {
                 sw.WriteLine(message);
-            }
         }
 
 
