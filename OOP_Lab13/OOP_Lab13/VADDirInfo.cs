@@ -7,13 +7,13 @@ namespace OOP_Lab13
     {
         public static void GetDirInfo()
         {
-            string path = @"C:\Users\valda\source\repos\semester #3\OOP_Labs";
+            string path = Path.GetFullPath(@"C:\Users\valda\source\repos\semester #3\OOP_Labs");
             string DirInfoLog = "";
 
             DirectoryInfo dirInfo = new DirectoryInfo(path);
 
             if (dirInfo.Exists)
-                DirInfoLog = "\n\n\nVADDirInfo:\n" +
+                DirInfoLog = "\n=========================================   VADDirInfo   =================================================\n" +
                              "\nКоличество файлов:        " + dirInfo.GetFiles().Length +
                              "\nВремя создания:           " + dirInfo.LastWriteTime +
                              "\nКол-во поддиректориев:    " + dirInfo.GetDirectories().Length +

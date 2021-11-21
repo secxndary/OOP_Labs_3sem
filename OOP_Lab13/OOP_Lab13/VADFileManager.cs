@@ -10,7 +10,7 @@ namespace OOP_Lab13
     {
         public static void VADInspect()
         {
-            string classLogInfo = "\n\n\nVADFileManager:\n";            /// инфа для логгера
+            string classLogInfo = "\n=======================================   VADFileManager   ===============================================\n";            /// инфа для логгера
             string inspectLog = "";
 
             DriveInfo[] drives = DriveInfo.GetDrives();                 /// получили инфу о всех дисках
@@ -18,9 +18,13 @@ namespace OOP_Lab13
             DirectoryInfo directory = new DirectoryInfo(@"D:\Lab13");   /// тот же путь, только типа данных DirectoryInfo
 
             directory.Create();                                         /// создаем субдерикторий D:\Lab13\VADInspect
-            directory.CreateSubdirectory(@"VADInspect");  
+            directory.CreateSubdirectory(@"VADInspect");
 
-            string filePath = @"D:\Lab13\VADInspect\vaddirinfo.txt";
+            DirectoryInfo VADInspectFiles = new DirectoryInfo(Path.GetFullPath(@"D:\Lab13\VADInspect\VADFiles"));
+            if (VADInspectFiles.Exists)
+                VADInspectFiles.Delete(true);
+
+            string filePath = Path.GetFullPath(@"D:\Lab13\VADInspect\vaddirinfo.txt");
             FileInfo fileInfo = new FileInfo(filePath);                 /// fileInfo шобы всё работало
             using (StreamWriter sw = fileInfo.CreateText())             /// создаем файл и сразу пишем поток
             {
@@ -32,7 +36,7 @@ namespace OOP_Lab13
             }
 
 
-            string renamePath = @"D:\Lab13\VADInspect\vaddirinfoRENAMED.txt";
+            string renamePath = Path.GetFullPath(@"D:\Lab13\VADInspect\vaddirinfoRENAMED.txt");
             FileInfo renameBuf = new FileInfo(renamePath);              /// буфер чтобы удалить созданный ранее RENAMED
             renameBuf.Delete();
 
@@ -40,29 +44,57 @@ namespace OOP_Lab13
             fileInfo.Delete();
 
 
-            DirectoryInfo inspectDirInfo = new DirectoryInfo(@"D:\Lab13\VADInspect");
+            DirectoryInfo inspectDirInfo = new DirectoryInfo(Path.GetFullPath(@"D:\Lab13\VADInspect"));
+            string files = "";
+            for (int i = 0; i < inspectDirInfo.GetFiles().Length; i++)
+                files += inspectDirInfo.GetFiles()[i].Name + "; ";          /// имена всех файлов записываем в строку
+
+            string directories = "";
+            for (int i = 0; i < inspectDirInfo.GetDirectories().Length; i++)
+                directories += inspectDirInfo.GetDirectories()[i];          /// имена всех директориев
+
             if (inspectDirInfo.Exists)
                 inspectLog = classLogInfo +
-                             "\nVADInspect:" +
-                             "\nФайлы:                    " + inspectDirInfo.GetFiles()[0].Name +
-                             "\nПоддиректории:            " + inspectDirInfo.GetDirectories()[0] +
-                             "\nРодительский директорий:  " + inspectDirInfo.Parent.Name;
+                             "\nФайлы:                    " + files +
+                             "\nПоддиректории:            " + directories +
+                             "\nРодительский директорий:  " + inspectDirInfo.Parent.Name +
+                             "\n\n==========================================================================================================";
+
 
             VADLog.WriteInLog(inspectLog);
         }
 
         public static void VADFiles()
         {
-            string VADFilesPath = @"D:\Lab13\VADFiles";
-            string VADInspectFilesPath = @"D:\Lab13\VADInspect\VADFiles";
-            string musicPath = @"D:\Music";
+            string rootDrivePath = Path.GetFullPath(@"D:\");
+            string VADFilesPath = Path.GetFullPath(rootDrivePath + @"Lab13\VADFiles");
+            string VADInspectFilesPath = Path.GetFullPath(rootDrivePath + @"Lab13\VADInspect\VADFiles");
+            string VADUnzipPath = Path.GetFullPath(rootDrivePath + @"Lab13\VADInspect\VADUnzip");
+            string musicPath = Path.GetFullPath(rootDrivePath + @"Music");
+            string ZIPPath = Path.GetFullPath(rootDrivePath + @"Lab13\VADInspect\VADFiles.zip");
+
 
             DirectoryInfo VADFiles = new DirectoryInfo(VADFilesPath);                        /// создать VADFIles
             DirectoryInfo VADInspectFiles = new DirectoryInfo(VADInspectFilesPath);          /// создать Inspect\Files
+            DirectoryInfo VADUnzip = new DirectoryInfo(VADUnzipPath);
 
             if (!VADFiles.Exists)                                                            /// если нет папки Files,
                 VADFiles.Create();                                                           /// то создаем ее, а хуле
- 
+
+            if (VADUnzip.Exists)
+                VADUnzip.Delete(true);
+
+            if (File.Exists(ZIPPath))
+                File.Delete(ZIPPath);
+
+            //if (VADUnzip.Exists)
+            //    VADUnzip.Delete();
+
+            //File.Delete(ZIPPath);
+            //FileInfo file1 = new FileInfo(ZIPPath);
+            //if (file1.Exists)
+            //    file1.Delete();
+
             DirectoryInfo musicDirInfo = new DirectoryInfo(musicPath);                       /// путь к Music 
             FileInfo[] filesMusic = musicDirInfo.GetFiles();                                 /// получить все файлы из Music
             foreach (FileInfo file in filesMusic)
@@ -71,19 +103,18 @@ namespace OOP_Lab13
 
             if (VADInspectFiles.Exists)                                                      /// если есть Inspect\Files,
                 VADInspectFiles.Delete(true);                                                /// то он нам нахуй не нужен
-
-            VADFiles.MoveTo(VADInspectFilesPath);                                            /// перемещаем в Inspect\Files
+            if (VADFiles.Exists)
+                VADFiles.MoveTo(VADInspectFilesPath);                                        /// перемещаем в Inspect\Files
         }
 
         public static void MakeArchive()
         {
-            string VADFilesPath = @"D:\Lab13\VADFiles";
-            string VADInspectFilesPath = @"D:\Lab13\VADInspect\VADFiles";
-            string VADInspectUnzipPath = @"D:\Lab13\VADInspect\VADUnzip";
-            string ZIPPath = @"D:\Lab13\VADInspect\VADFiles.zip";
+            string lab13Path = Path.GetFullPath(@"D:\Lab13\");
+            string VADFilesPath = Path.GetFullPath(lab13Path + @"VADFiles");
+            string VADInspectFilesPath = Path.GetFullPath(lab13Path + @"VADInspect\VADFiles");
+            string VADInspectUnzipPath = Path.GetFullPath(lab13Path + @"VADInspect\VADUnzip");
+            string ZIPPath = Path.GetFullPath(lab13Path + @"VADInspect\VADFiles.zip");
 
-            if (File.Exists(ZIPPath))                                                       /// здесь по идее если остался 
-                File.Delete(ZIPPath);                                                       /// .zip, его надо удалить,
                                                                                             /// но эта хуйня не работает
             DirectoryInfo VADFiles = new DirectoryInfo(VADFilesPath);
             ZipFile.CreateFromDirectory(VADInspectFilesPath, ZIPPath);                      /// архивируем
@@ -103,8 +134,9 @@ namespace OOP_Lab13
                              where !String.IsNullOrEmpty(currEntry.Name)
                              select currEntry;
                 foreach (ZipArchiveEntry entry in result)
-                    entry.ExtractToFile(Path.Combine(VADInspectUnzipPath, entry.Name));     /// я эту лабу в рот ебал
+                    entry.ExtractToFile(Path.Combine(VADInspectUnzipPath, entry.Name));     /// я эту лабу в рот ебал 
             }
+            
 
         }
     }
