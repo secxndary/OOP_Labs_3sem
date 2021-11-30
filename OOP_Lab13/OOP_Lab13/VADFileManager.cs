@@ -108,7 +108,7 @@ namespace OOP_Lab13
             string VADInspectUnzipPath = Path.GetFullPath(lab13Path + @"VADInspect\VADUnzip");
             string ZIPPath = Path.GetFullPath(lab13Path + @"VADInspect\VADFiles.zip");
 
-                                                                                            /// но эта хуйня не работает
+                                                                                           
             DirectoryInfo VADFiles = new DirectoryInfo(VADFilesPath);
             ZipFile.CreateFromDirectory(VADInspectFilesPath, ZIPPath);                      /// архивируем
 

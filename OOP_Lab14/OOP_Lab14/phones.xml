@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<phones>
+  <phone name="iPhone 13">
+    <company>Apple</company>
+    <price>1999$</price>
+  </phone>
+  <phone name="Pixel 5A">
+    <company>Google</company>
+    <price>1499$</price>
+  </phone>
+</phones>

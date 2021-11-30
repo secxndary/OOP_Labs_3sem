@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Xml.Serialization;
 
 namespace OOP_Lab14
 {
     [Serializable]
     public class Transformer : IntelligentBeing, ICarManagement
     {
-        [NonSerialized]
+        [NonSerialized] 
+        [XmlIgnore]
         public int NonSerialized = 1;
         public string Nickname { get; set; }
         public int Power { get; set; }

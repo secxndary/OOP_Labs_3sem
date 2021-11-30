@@ -1,42 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.Json;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
-using System.Runtime.Serialization.Formatters;
 
 namespace OOP_Lab14
 {
-    public static class CustomSerializer
+    public class CustomSerializer
     {
+        /// Строка в которой будем хранить путь к папке проекта
+        public static string path = Path.GetFullPath(@"C:\Users\valda\source\repos\semester #3\OOP_Labs\OOP_Lab14\OOP_Lab14\");
+
+
         /// Методы для подключения FileStream для разных типов файлов
         public static FileStream UseFileStreamTXT()
         {
-            string filePath = @"C:\Users\valda\source\repos\semester #3\OOP_Labs\OOP_Lab14\OOP_Lab14\out.txt";
+            string filePath = Path.GetFullPath(path + @"out.txt");
             FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);
             return fs;
         }
 
         public static FileStream UseFileStreamXML()
         {
-            string filePath = @"C:\Users\valda\source\repos\semester #3\OOP_Labs\OOP_Lab14\OOP_Lab14\out.xml";
+            string filePath = Path.GetFullPath(path + @"out.xml");
             FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);
             return fs;
         }
 
         public static FileStream UseFileStreamJSON()
         {
-            string filePath = @"C:\Users\valda\source\repos\semester #3\OOP_Labs\OOP_Lab14\OOP_Lab14\out.json";
-            FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);
-            return fs;
-        }
-
-        public static FileStream UseFileStreamSOAP()
-        {
-            string filePath = @"C:\Users\valda\source\repos\semester #3\OOP_Labs\OOP_Lab14\OOP_Lab14\out.soap";
+            string filePath = Path.GetFullPath(path + @"out.json");
             FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate);
             return fs;
         }
@@ -112,12 +105,20 @@ namespace OOP_Lab14
 
 
 
-        /// Сериализация и десерализация в SOAP
-        public static void SerializeSOAP()
+        /// Сериализация всего
+        public static void SerializeAll(Transformer obj)
         {
-            FileStream fs = UseFileStreamSOAP();
-            //SoapFormatter formatter = new SoapFormatter();
-
+            CustomSerializer.SerializeBinary(obj);
+            CustomSerializer.DeserializeBinary();
+            CustomSerializer.SerializeJSON(obj);
+            CustomSerializer.DeserializeJSON();
+            CustomSerializer.SerializeXML(obj);
+            CustomSerializer.DeserializeXML();
         }
+
     }
+
+
+
+ 
 }
