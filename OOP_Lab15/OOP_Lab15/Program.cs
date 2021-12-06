@@ -37,7 +37,7 @@ namespace OOP_Lab15
 
 
             // Задание 3. Вывод простых чисел от 1 до n
-            Thread simpleThread = new Thread(Methods.SimpleNumbers);            /// создаем новый поток
+            Thread simpleThread = new Thread(Methods.SimpleNumbers)     /// создаем новый поток
             simpleThread.Start();                                       /// запускаем его
             Console.WriteLine("\n\n\nИнформация о потоке:");
             Console.WriteLine("Выполняется ли поток: " + simpleThread.IsAlive);
@@ -63,7 +63,7 @@ namespace OOP_Lab15
 
 
             // Задание 5. Класс Timer
-            TimerCallback tm = new TimerCallback(Methods.Task5);                /// делегат для таймера
+            TimerCallback tm = new TimerCallback(Methods.Task5);        /// делегат для таймера
             Timer timer = new Timer(tm, null, 1000, 1000);              /// null - параметр которого нет, 1000 - 
             Thread.Sleep(4000);                                         /// время через которое запустится процесс
                                                                         /// с таймером, 1000 - периодичность таймера,
