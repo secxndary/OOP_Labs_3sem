@@ -2,7 +2,6 @@
 using System.Threading;
 using System.Diagnostics;
 using System.Reflection;
-using System.Linq;
 
 namespace OOP_Lab15
 {
@@ -11,7 +10,7 @@ namespace OOP_Lab15
         static void Main(string[] args)
         {
             // Задание 1. Процессы и информация о них
-            var allProcesses = Process.GetProcesses();
+            var allProcesses = Process.GetProcesses();                  /// получаем массив со всеми процессами
             Console.WriteLine("Информация о процессах:");
             Console.Write("{0,-20}", "ID:");
             Console.Write("{0,-70}", "Process Name:");
@@ -27,7 +26,7 @@ namespace OOP_Lab15
 
 
             // Задание 2. Исследование текущего домена
-            AppDomain domain = AppDomain.CurrentDomain;
+            AppDomain domain = AppDomain.CurrentDomain;                 /// текущий домен с процессами
             Console.WriteLine("\n\n\n\nТекущий домен:         " + domain.FriendlyName);
             Console.WriteLine("Базовый каталог:       " + domain.BaseDirectory);
             Console.WriteLine("Детали конфигурации:   " + domain.SetupInformation);
@@ -38,81 +37,37 @@ namespace OOP_Lab15
 
 
             // Задание 3. Вывод простых чисел от 1 до n
-            Thread simpleThread = new Thread(SimpleNumbers);
-            simpleThread.Start();
+            Thread simpleThread = new Thread(Methods.SimpleNumbers);            /// создаем новый поток
+            simpleThread.Start();                                       /// запускаем его
             Console.WriteLine("\n\n\nИнформация о потоке:");
             Console.WriteLine("Выполняется ли поток: " + simpleThread.IsAlive);
             Console.WriteLine("Приоритет потока: " + simpleThread.Priority);
             Console.WriteLine("Идентификатор: " + simpleThread.ManagedThreadId);
-            simpleThread.Join();
+            simpleThread.Join();                                        /// ждем пока он отработает 
+
 
 
             // Задание 4. Два потока четных и нечетных чисел
-            Console.WriteLine("\n\n\nЧётные числа:");
-            Thread evenThread = new Thread(EvenNumbers);
-            evenThread.Priority = ThreadPriority.AboveNormal;
-            evenThread.Start();
-            evenThread.Join();
+            Console.WriteLine("\n\n\nПотоки чётных и нечётных чисел:");
+            Thread evenThread = new Thread(Methods.EvenNumbers);
+            evenThread.Priority = ThreadPriority.AboveNormal;           /// меняем приоритет по заданию
+            evenThread.Start();             /// если закомментить Join(), второй поток не будет ждать первый
+            evenThread.Join();              // Чтобы выводились поочередно, надо закомментить эту строку!!!
 
-            Console.WriteLine("\nНечётные числа:");
-            Thread oddThread = new Thread(OddNumbers);
+            Console.WriteLine();
+            Thread oddThread = new Thread(Methods.OddNumbers);
             oddThread.Priority = ThreadPriority.BelowNormal;
             oddThread.Start();
             oddThread.Join();
 
-            
-        }
 
 
-
-
-        public static void SimpleNumbers()
-        {
-            Thread.Sleep(1);
-            Console.WriteLine("\nВведите n: ");
-            int n = int.Parse(Console.ReadLine());
-            for (var i = 1; i <= n; i++)
-            {
-                var isSimple = true;
-                for (var j = 2; j <= i / 2; j++)
-                    if (i % j == 0)
-                    {
-                        isSimple = false;
-                        break;
-                    }
-
-                if (isSimple)
-                {
-                    Console.Write($"{i} ");
-                    Thread.Sleep(100);
-                }
-            }
-        }
-
-        public static void EvenNumbers()
-        {
-            for (int i = 0; i <= 19; i++)
-            {
-                if (i % 2 == 0)
-                {
-                    Console.Write($"{i} ");
-                    Thread.Sleep(100);
-                }
-            }
-        }
-
-        
-
-        public static void OddNumbers()
-        {
-            for (int i = 0; i <= 19; i++)
-            {
-                if (i % 2 != 0)
-                {
-                    Console.Write($"{i} ");
-                    Thread.Sleep(100);
-                }
-            }
-        }
+            // Задание 5. Класс Timer
+            TimerCallback tm = new TimerCallback(Methods.Task5);                /// делегат для таймера
+            Timer timer = new Timer(tm, null, 1000, 1000);              /// null - параметр которого нет, 1000 - 
+            Thread.Sleep(4000);                                         /// время через которое запустится процесс
+                                                                        /// с таймером, 1000 - периодичность таймера,
+                                                                        /// 4000 - ждем и не закрываем поток
+        }   
     }
 }
