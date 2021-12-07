@@ -37,7 +37,7 @@ namespace OOP_Lab15
 
 
             // Задание 3. Вывод простых чисел от 1 до n
-            Thread simpleThread = new Thread(Methods.SimpleNumbers)     /// создаем новый поток
+            Thread simpleThread = new Thread(Methods.SimpleNumbers);    /// создаем новый поток
             simpleThread.Start();                                       /// запускаем его
             Console.WriteLine("\n\n\nИнформация о потоке:");
             Console.WriteLine("Выполняется ли поток: " + simpleThread.IsAlive);
