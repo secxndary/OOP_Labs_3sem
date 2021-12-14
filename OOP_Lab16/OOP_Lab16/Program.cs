@@ -153,23 +153,32 @@ namespace OOP_Lab16
 
 
 
-            Console.WriteLine("===============================   TASK 7   ===============================");
 
+            Console.WriteLine("===============================   TASK 8   ===============================");
+            FactorialAsync();
+            Console.WriteLine("Main is still running.");
+            Console.ReadKey();
+
+
+
+
+
+            //  TASK 7
             BlockingCollection<string> bc = new BlockingCollection<string>(5);
             CancellationTokenSource ts = new CancellationTokenSource();
             CancellationToken token7 = ts.Token;
 
             Task[] sellers = new Task[10]
             {
-                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Стол"); } }),
-                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Шкаф"); } }),
-                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Зеркало"); } }),
-                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Светильник"); } }),
+                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Шампиньон"); } }),
+                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Цапля"); } }),
+                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Кулебяка"); } }),
+                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Щавель"); } }),
                 new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Микроволновка"); } }),
 
-                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Подоконник"); } }),
-                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Вазон"); } }),
-                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Дверная ручка"); } }),
+                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Вантуз"); } }),
+                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Трамвайная ручка"); } }),
+                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Спинниг"); } }),
                 new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Подстаканник"); } }),
                 new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Пульверизатор"); } }),
             };
@@ -198,6 +207,8 @@ namespace OOP_Lab16
                     count = bc.Count;
                     Thread.Sleep(400);
                     Console.Clear();
+                    Console.WriteLine("============   TASK 7   =============");
+
                     Console.WriteLine("----------------Склад----------------");
 
                     foreach (var item in bc)
@@ -205,12 +216,17 @@ namespace OOP_Lab16
 
                     if (token7.IsCancellationRequested)
                     {
-                        Console.WriteLine("\n Процесс остановлен.");
+                        Console.WriteLine("\nProcess stopped.");
                         return;
                     }
-                    Console.WriteLine("--------------------------------------");
+                    Console.WriteLine("-------------------------------------");
                 }
             }
+
+
+
+
+
 
 
 
@@ -224,6 +240,28 @@ namespace OOP_Lab16
 
 
         public static CancellationTokenSource tokenSource = new CancellationTokenSource();
+
+
+
+        public static void Factorial()
+        {
+            int result = 1;
+            for (int i = 1; i <= 6; i++)
+            {
+                result *= i;
+            }
+            Thread.Sleep(1000);
+            Console.WriteLine($"Factorial equals {result}");
+        }
+
+        public static async void FactorialAsync()
+        {
+            Console.WriteLine("Start of FactorialAsync");
+            await Task.Run(() => Factorial());
+            Console.WriteLine("End of FactorialAsync");
+        }
+
+
 
 
         static void Display()
