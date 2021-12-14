@@ -17,23 +17,14 @@ namespace OOP_Lab16
             CancellationTokenSource bufCancelTokenSource = new CancellationTokenSource();  /// это просто надо,  
             CancellationToken bufToken = bufCancelTokenSource.Token;                       /// не обращаем внимания
 
-            //Stopwatch stopWatch = new Stopwatch();                                /// с помощью StopWatch отследим,       
-            //stopWatch.Start();                                                    /// сколько времени занял процесс
-
             Task Eratos = new Task(() => ErSieve(300)); /// создаем новый Task
             Console.WriteLine($"Task ID:              {Eratos.Id}");              /// выводим ID
             Console.WriteLine($"Status when created:  {Eratos.Status}");          /// выводим состояние при создании,
             Eratos.Start();                                                       /// когда процесс запущен и при
             Console.WriteLine($"Status when started:  {Eratos.Status}\n");        /// его закрытии
             Eratos.Wait();                                                        /// здесь Main ждет, пока не 
-            Console.WriteLine($"Status when ended:    {Eratos.Status}");      /// отработает Task Eratos
+            Console.WriteLine($"Status when ended:    {Eratos.Status}");          /// отработает Task Eratos
 
-            //stopWatch.Stop();                                                     /// останавливаем StopWatch 
-            //TimeSpan ts = stopWatch.Elapsed;                                      /// и выводим,сколько времени 
-            //string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",     /// заняла наша задача
-            //    ts.Hours, ts.Minutes, ts.Seconds,
-            //    ts.Milliseconds / 10);
-            //Console.WriteLine("Total runtime:        " + elapsedTime);
 
 
 
@@ -41,19 +32,16 @@ namespace OOP_Lab16
             CancellationTokenSource cancelTokenSource = new CancellationTokenSource();  /// соус для токена
             CancellationToken token = cancelTokenSource.Token;                          /// токен отмены из соуса
 
-            Task Eratos2 = new Task(() => EratosSieve2(400));
+            Task Eratos2 = new Task(() => EratosSieve2(400));                           /// во втором методе реализован токен отмены
             Console.WriteLine($"Task #{Eratos2.Id} status:       {Eratos2.Status}");
             Eratos2.Start();
 
-            Console.WriteLine("Enter 0 to stop the process:\n");
-            string s = Console.ReadLine();
-            if (s == "0")
-                tokenSource.Cancel();
+            Console.WriteLine("Enter 0 to stop the process:\n");                        /// по идее должен ливать из процесса
+            string s = Console.ReadLine();                                              /// при вводе 0, но это нихуя не работает
+            if (s == "0")                                                               /// и процесс по факту просто выполняется    
+                tokenSource.Cancel();                                                   /// и ему похуй. ниже есть костыли
             Console.WriteLine($"Task #{Eratos2.Id} status:       Completed");
-            //ConsoleKeyInfo key = Console.ReadKey();                                     /// ливается при вводе любого
-            //if (key.Key == ConsoleKey.S)                                                /// символа, если кто знает            
-            //    cancelTokenSource.Cancel();                                             /// что не так contact me        
-            //Eratos2.Wait();
+
 
 
 
@@ -62,9 +50,7 @@ namespace OOP_Lab16
             {
                 int x = 2;
                 for (int i = 1; i < 7; i++)
-                {
                     x *= i;
-                }
                 Console.WriteLine($"Result #1:            {x}");
                 return x;
             });
@@ -85,9 +71,7 @@ namespace OOP_Lab16
             {
                 int z = -300;
                 for (int i = 0; i < 54; i++)
-                {
                     z += i;
-                }
                 Console.WriteLine($"Result #3:            {z}");
                 return z;
             });
@@ -100,13 +84,16 @@ namespace OOP_Lab16
 
 
 
+
             Console.WriteLine("===============================   TASK 4   ===============================");
             Task<int> task1 = new Task<int>(() => Sum(42, 53));             /// некоторая задача суммы
             Task task2 = task1.ContinueWith(sum => Display(sum.Result));    /// эта задача запускается после завершения первой
             task1.Start();                                                  /// запускаем первую задачу
             task2.Wait();                                                   /// и ждем окончания второй
 
+
             /// в пизду этот getawaiter getresult, код из методички не работает)
+
             //Task<int> what = Task.Run(() => Enumerable.Range(1, 100000).Count(n => (n % 2 == 0)));
             //// получаем объект продолжения 
             //var awaiter = what.GetAwaiter();
@@ -121,17 +108,16 @@ namespace OOP_Lab16
 
 
 
-
             Console.WriteLine("===============================   TASK 5   ===============================");
-            List<long> list = new List<long>() { 8, 10, 7, 12 };
+            List<long> list = new List<long>() { 8, 10, 7, 12 };                /// "большой массив"
 
             Console.WriteLine("Parallel cycle:\n");
-            ParallelLoopResult result = Parallel.ForEach<long>(list, Factorial);
+            ParallelLoopResult result = Parallel.ForEach<long>(list, Factorial);/// с помощью паралелльно форича считаем факториалы
 
-            Console.WriteLine("\nDefault cycle:\n");
-            foreach (long l in list)
-            {
-                long result1 = 1;
+            Console.WriteLine("\nDefault cycle:\n");                            /// то же самое с дефолтным форичем
+            foreach (long l in list)                                            /// спойлер: даже с типом данных лонг 
+            {                                                                   /// и тот и тот процесс выполняются за 0.01 сек
+                long result1 = 1;                                               /// так что врем я даже не измерял
                 for (int i = 1; i <= l; i++)
                     result1 *= i;
                 Console.WriteLine($"Factorial of {l} is {result1}.");
@@ -140,33 +126,30 @@ namespace OOP_Lab16
 
 
 
-
             Console.WriteLine("===============================   TASK 6   ===============================");
-            Console.WriteLine("Using Invoke():");
-            Parallel.Invoke(Display, 
-            () => { 
-                    Console.WriteLine($"Completing Task #{Task.CurrentId}");
-                  },
+            Console.WriteLine("Using Invoke():");                               /// вывызваем параллельно через Invoke()
+            Parallel.Invoke(Display,                                            /// три метода и тот кто пошустрее 
+            () =>
+            {                                                             /// выполнится первый
+                Console.WriteLine($"Completing Task #{Task.CurrentId}");
+            },
             () => Factorial(5));
 
 
 
 
-
-
             Console.WriteLine("===============================   TASK 8   ===============================");
-            FactorialAsync();
+            FactorialAsync();                               /// асинхронная функция факториала
             Console.WriteLine("Main is still running.");
-            Console.ReadKey();
-
+            Console.ReadKey();                              // тут надо нажать на любую кнопку, чтобы запустить следующую задачу!!!!
 
 
 
 
             //  TASK 7
-            BlockingCollection<string> bc = new BlockingCollection<string>(5);
-            CancellationTokenSource ts = new CancellationTokenSource();
-            CancellationToken token7 = ts.Token;
+            BlockingCollection<string> bc = new BlockingCollection<string>(5);                      /// мне бля похуй я не 
+            CancellationTokenSource ts = new CancellationTokenSource();                             /// разбирался особо с этим 
+            CancellationToken token7 = ts.Token;                                                    /// мне бы лабы и КП сдать
 
             Task[] sellers = new Task[10]
             {
@@ -178,7 +161,7 @@ namespace OOP_Lab16
 
                 new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Вантуз"); } }),
                 new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Трамвайная ручка"); } }),
-                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Спинниг"); } }),
+                new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Спиннинг"); } }),
                 new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Подстаканник"); } }),
                 new Task (()=>{while (true) { Thread.Sleep(700); bc.Add("Пульверизатор"); } }),
             };
@@ -199,6 +182,7 @@ namespace OOP_Lab16
             foreach (var item in consumers)
                 if (item.Status != TaskStatus.Running)
                     item.Start();
+
             int count = 0;
             while (true)
             {
@@ -208,8 +192,7 @@ namespace OOP_Lab16
                     Thread.Sleep(400);
                     Console.Clear();
                     Console.WriteLine("============   TASK 7   =============");
-
-                    Console.WriteLine("----------------Склад----------------");
+                    Console.WriteLine("--------------- Склад ---------------");
 
                     foreach (var item in bc)
                         Console.WriteLine(item);
@@ -222,23 +205,12 @@ namespace OOP_Lab16
                     Console.WriteLine("-------------------------------------");
                 }
             }
-
-
-
-
-
-
-
-
         }
 
 
 
 
-
-
-
-
+        // Поле с соусом для токенов (юзается в функциях Ератосфена ниже)
         public static CancellationTokenSource tokenSource = new CancellationTokenSource();
 
 
@@ -254,14 +226,13 @@ namespace OOP_Lab16
             Console.WriteLine($"Factorial equals {result}");
         }
 
+
         public static async void FactorialAsync()
         {
             Console.WriteLine("Start of FactorialAsync");
             await Task.Run(() => Factorial());
             Console.WriteLine("End of FactorialAsync");
         }
-
-
 
 
         static void Display()
@@ -289,12 +260,11 @@ namespace OOP_Lab16
             return (a + b);
         }
 
-        
+
         public static void Display(int sum)
         {
             Console.WriteLine($"Sum of A+B:           {sum}");
         }
-
 
 
         public static void ErSieve(int n)
@@ -342,8 +312,6 @@ namespace OOP_Lab16
         }
 
 
-
-
         public static void EratosSieve2(int n)
         {
             CancellationToken tokenForEr = tokenSource.Token;
@@ -375,7 +343,7 @@ namespace OOP_Lab16
                 if (tokenSource.Token.IsCancellationRequested)
                     return;
 
-                if (tokenForEr.IsCancellationRequested)                        /// почему-то останавливает процесс при вводе любого
+                if (tokenForEr.IsCancellationRequested)                         /// почему-то останавливает процесс при вводе любого
                 {                                                               /// символа. если кто знает что не так
                     Console.WriteLine("\nThe process was stopped.");            /// то как говорится contact me
                     break;
@@ -400,50 +368,5 @@ namespace OOP_Lab16
             Console.WriteLine("\nTotal runtime:        " + elapsedTime);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // Алгоритм поиска простых чисел Решетом Эратосфена (для задания 1)
-        public static List<uint> SieveEratos(uint n, CancellationTokenSource cancelTokenSource)
-        {
-
-            var numbers = new List<uint>();
-            for (var i = 2u; i < n; i++)
-                numbers.Add(i);
-
-            for (var i = 0; i < numbers.Count; i++)
-                for (var j = 2u; j < n; j++)
-                    numbers.Remove(numbers[i] * j);
-
-            Console.WriteLine($"All simple numbers from 1 to {n}:");
-            foreach (uint num in numbers)
-            {
-                Console.Write($"{num} ");
-                Thread.Sleep(30);
-            }
-            
-            if (cancelTokenSource.IsCancellationRequested)
-            {
-                Console.WriteLine("The process was stopped by a token.");
-                return numbers;
-            }
-
-            return numbers;
-        }
     }
 }
