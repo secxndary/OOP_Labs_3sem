@@ -12,8 +12,6 @@ namespace OOP_Lab16
         static void Main(string[] args)
         {
             Console.WriteLine("===============================   TASK 1   ===============================");
-            CancellationTokenSource bufCancelTokenSource = new CancellationTokenSource();  /// это просто надо,  
-            CancellationToken bufToken = bufCancelTokenSource.Token;                       /// не обращаем внимания
 
             Task Eratos = new Task(() => ErSieve(300));                           /// создаем новый Task
             Console.WriteLine($"Task ID:              {Eratos.Id}");              /// выводим ID
@@ -27,8 +25,6 @@ namespace OOP_Lab16
 
 
             Console.WriteLine("===============================   TASK 2   ===============================");
-            CancellationTokenSource cancelTokenSource = new CancellationTokenSource();  /// соус для токена
-            CancellationToken token = cancelTokenSource.Token;                          /// токен отмены из соуса
 
             Task Eratos2 = new Task(() => EratosSieve2(400));                           /// во втором методе реализован токен отмены
             Console.WriteLine($"Task #{Eratos2.Id} status:       {Eratos2.Status}");
