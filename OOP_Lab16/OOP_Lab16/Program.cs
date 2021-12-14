@@ -17,7 +17,7 @@ namespace OOP_Lab16
             CancellationTokenSource bufCancelTokenSource = new CancellationTokenSource();  /// это просто надо,  
             CancellationToken bufToken = bufCancelTokenSource.Token;                       /// не обращаем внимания
 
-            Task Eratos = new Task(() => ErSieve(300)); /// создаем новый Task
+            Task Eratos = new Task(() => ErSieve(300));                           /// создаем новый Task
             Console.WriteLine($"Task ID:              {Eratos.Id}");              /// выводим ID
             Console.WriteLine($"Status when created:  {Eratos.Status}");          /// выводим состояние при создании,
             Eratos.Start();                                                       /// когда процесс запущен и при
