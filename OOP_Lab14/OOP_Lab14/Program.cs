@@ -8,7 +8,7 @@ namespace OOP_Lab14
         static void Main(string[] args)
         {
 
-            // Задание 1. Сериализировать и десерализировать через txt, json и xml 
+            // Задание 1. Сериализировать и десерализировать через txt, json и xml
             Transformer opt = new Transformer("Optimus", "Prime", 8640);
             Transformer bee = new Transformer("Bumble", "Beezy", 7540);
             Transformer[] transes = { opt, bee };
@@ -22,6 +22,8 @@ namespace OOP_Lab14
             {
                 CustomSerializer.SerializeBinary(trans);
                 CustomSerializer.DeserializeBinary();
+                CustomSerializer.SerializeJSON(trans);
+                CustomSerializer.DeserializeJSON();
             }
 
 
